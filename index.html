@@ -49,7 +49,7 @@
                 
                 <div class="demo-accounts">
                     <h3>데모 계정</h3>
-                    <p><strong>관리사:</strong> admin@drgm.com / admin</p>
+                    <p><strong>관리사:</strong> admin@drgm.co.kr / admin</p>
                     <p><strong>법인:</strong> guest@company.com / guest</p>
                 </div>
             </form>
@@ -61,8 +61,8 @@
         <!-- 헤더 -->
         <header class="header">
             <div class="header-left">
-                <img src="images/Logo_DrGM_3color.png" alt="로고" class="header-logo" id="headerLogo">
-                <h1 class="header-title">법인 관리 프로그램</h1>
+                <img src="images/Logo_DrGM_3color.png" alt="로고" class="header-logo" id="headerLogo" style="cursor: pointer;">
+                <h1 class="header-title" id="headerTitle" style="cursor: pointer;">법인 관리 프로그램</h1>
             </div>
             
             <nav class="header-nav">
@@ -130,7 +130,7 @@
                 <div id="corpSelector" class="corp-selector" style="display: none;">
                     <div class="selector-buttons">
                         <button class="btn btn-outline active" id="allCorpsBtn">전체</button>
-                        <button class="btn btn-outline" id="selectCorpBtn">선택 법인</button>
+                        <button class="btn btn-outline" id="selectCorpBtn">법인 선택</button>
                     </div>
                     <div class="selected-corp" id="selectedCorp" style="display: none;">
                         <span class="corp-name">선택된 법인: <strong id="selectedCorpName">없음</strong></span>
@@ -1019,7 +1019,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="profileEmail">이메일</label>
-                                            <input type="email" id="profileEmail" value="admin@company.com" readonly>
+                                            <input type="email" id="profileEmail" value="" readonly>
                                         </div>
                                     </div>
                                     <div class="form-row">
