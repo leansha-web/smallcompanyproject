@@ -1226,11 +1226,15 @@
     <script src="js/app.js"></script>
     <script>
         // 페이지 로드 시 상품 옵션 데이터 초기화
-        document.addEventListener('DOMContentLoaded', function() {
+        window.addEventListener('load', function() {
             console.log('페이지 로드 완료 - 초기 데이터 로드 시작');
             
-            loadProductOptionsFromStorage();
-            loadProductsFromStorage();
+            if (typeof loadProductOptionsFromStorage === 'function') {
+                loadProductOptionsFromStorage();
+            }
+            if (typeof loadProductsFromStorage === 'function') {
+                loadProductsFromStorage();
+            }
             
             // 중복 키 문제 해결 (paymentCycle을 paymentCycles로 통합)
             setTimeout(() => {

@@ -708,6 +708,36 @@ body {
     background-color: rgba(0, 0, 0, 0.5);
 }
 
+/* 법인 선택 모달 스타일 */
+.corp-selection-item {
+    margin: 10px 0;
+    padding: 10px;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.corp-selection-item:hover {
+    background-color: #f3f4f6;
+}
+
+.corp-selection-item label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    margin: 0;
+}
+
+.corp-selection-item input[type="radio"] {
+    margin-right: 10px;
+}
+
+.corp-selection-item span {
+    font-size: 16px;
+    font-weight: 500;
+}
+
 .modal.show {
     display: flex;
     align-items: center;

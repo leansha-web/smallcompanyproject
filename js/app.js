@@ -35,9 +35,12 @@ class CorporateManagementApp {
     }
 
     init() {
+        console.log('App 초기화 시작'); // 디버깅용
         this.bindEvents();
         this.loadSampleData();
         this.bindDirectorFormEvents();
+        this.updateProfileEmail();
+        console.log('App 초기화 완료'); // 디버깅용
     }
     
     initializeSettingsData() {
@@ -179,24 +182,48 @@ class CorporateManagementApp {
     }
 
     bindEvents() {
+        console.log('bindEvents 호출됨'); // 디버깅용
+        
         // 로그인 폼
-        document.getElementById('loginForm').addEventListener('submit', (e) => this.handleLogin(e));
-        document.getElementById('togglePassword').addEventListener('click', () => this.togglePassword());
+        const loginForm = document.getElementById('loginForm');
+        const togglePassword = document.getElementById('togglePassword');
+        
+        console.log('로그인 폼 요소:', loginForm); // 디버깅용
+        console.log('비밀번호 토글 요소:', togglePassword); // 디버깅용
+        
+        if (loginForm) {
+            loginForm.addEventListener('submit', (e) => this.handleLogin(e));
+            console.log('로그인 폼 이벤트 바인딩 완료'); // 디버깅용
+        }
+        
+        if (togglePassword) {
+            togglePassword.addEventListener('click', () => this.togglePassword());
+            console.log('비밀번호 토글 이벤트 바인딩 완료'); // 디버깅용
+        }
     }
 
     bindMainAppEvents() {
-        // 중복 바인딩 방지
-        if (this.eventsBound) return;
-        this.eventsBound = true;
-        
         console.log('이벤트 바인딩 시작'); // 디버깅용
+        
+        // 각 네비게이션 버튼에 직접 이벤트 바인딩
+        const navItems = document.querySelectorAll('.nav-item');
+        console.log('찾은 네비게이션 버튼 개수:', navItems.length); // 디버깅용
+        
+        navItems.forEach((navItem, index) => {
+            console.log(`버튼 ${index}:`, navItem.dataset.page); // 디버깅용
+            navItem.addEventListener('click', (e) => {
+                e.preventDefault();
+                console.log('네비게이션 클릭됨:', navItem.dataset.page); // 디버깅용
+                this.navigateToPage({ target: navItem });
+            });
+        });
         
         // 전역 이벤트 위임으로 모든 클릭 처리
         document.addEventListener('click', (e) => {
-            // 네비게이션 메뉴 클릭
+            // 네비게이션 메뉴 클릭 (백업용)
             if (e.target.closest('.nav-item')) {
                 const navItem = e.target.closest('.nav-item');
-                console.log('네비게이션 클릭됨:', navItem.dataset.page); // 디버깅용
+                console.log('백업 네비게이션 클릭됨:', navItem.dataset.page); // 디버깅용
                 this.navigateToPage({ target: navItem });
                 return;
             }
@@ -1056,21 +1083,31 @@ class CorporateManagementApp {
         const email = document.getElementById('email').value;
         const password = document.getElementById('password').value;
         
+        console.log('로그인 시도:', email, password); // 디버깅용
+        
         // 데모 계정 체크
-        if (email === 'admin@drgm.com' && password === 'admin') {
+        if (email === 'admin@drgm.co.kr' && password === 'admin') {
+            console.log('관리자 로그인 성공'); // 디버깅용
             this.currentUser = { email, role: 'admin', name: '관리자' };
             this.isAdmin = true;
             this.showMainApp();
+            this.updateProfileEmail();
         } else if (email === 'guest@company.com' && password === 'guest') {
+            console.log('법인 로그인 성공'); // 디버깅용
             this.currentUser = { email, role: 'corp', name: '법인 사용자' };
             this.isAdmin = false;
             this.showMainApp();
+            this.updateProfileEmail();
         } else {
+            console.log('로그인 실패:', email, password); // 디버깅용
             alert('이메일 또는 비밀번호가 일치하지 않습니다.');
         }
     }
 
     showMainApp() {
+        console.log('showMainApp 호출됨'); // 디버깅용
+        console.log('현재 사용자:', this.currentUser); // 디버깅용
+        
         document.getElementById('loginScreen').style.display = 'none';
         document.getElementById('mainApp').style.display = 'flex';
         
@@ -1088,27 +1125,49 @@ class CorporateManagementApp {
         
         // 즉시 이벤트 바인딩
         this.bindMainAppEvents();
-        this.navigateToPage({ target: { dataset: { page: 'dashboard' } } });
+        this.bindHeaderNavigation();
+        
+        // 대시보드로 이동
+        document.querySelectorAll('.page').forEach(p => {
+            p.classList.remove('active');
+        });
+        document.getElementById('dashboardPage').classList.add('active');
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.classList.remove('active');
+        });
+        document.querySelector('[data-page="dashboard"]').classList.add('active');
+        this.currentPage = 'dashboard';
     }
 
     togglePassword() {
+        console.log('비밀번호 토글 클릭됨'); // 디버깅용
         const passwordInput = document.getElementById('password');
         const toggleIcon = document.getElementById('togglePassword');
+        
+        if (!passwordInput || !toggleIcon) {
+            console.log('요소를 찾을 수 없음:', passwordInput, toggleIcon); // 디버깅용
+            return;
+        }
         
         if (passwordInput.type === 'password') {
             passwordInput.type = 'text';
             toggleIcon.classList.remove('fa-eye');
             toggleIcon.classList.add('fa-eye-slash');
+            console.log('비밀번호 표시'); // 디버깅용
         } else {
             passwordInput.type = 'password';
             toggleIcon.classList.remove('fa-eye-slash');
             toggleIcon.classList.add('fa-eye');
+            console.log('비밀번호 숨김'); // 디버깅용
         }
     }
 
     navigateToPage(e) {
-        const target = e.target || e;
+        console.log('navigateToPage 호출됨:', e); // 디버깅용
+        
+        const target = e.target;
         const page = target.dataset?.page;
+        
         console.log('네비게이션 클릭:', page); // 디버깅용
         
         if (!page) {
@@ -1163,17 +1222,22 @@ class CorporateManagementApp {
         document.getElementById('selectCorpBtn').classList.add('active');
         document.getElementById('allCorpsBtn').classList.remove('active');
         
-        // 법인 선택 모달 표시 (간단한 구현)
-        const corpName = prompt('법인명을 입력하세요:', 'ABC 주식회사');
-        if (corpName) {
-            this.selectedCorp = this.sampleData.corporations.find(corp => corp.name === corpName);
-            if (this.selectedCorp) {
-                document.getElementById('selectedCorpName').textContent = this.selectedCorp.name;
-                document.getElementById('selectedCorp').style.display = 'flex';
-                this.renderCorpTable();
-            }
+        // 체크박스가 선택된 법인으로 선택
+        const selectedCheckbox = document.querySelector('#corpTableBody input[type="checkbox"]:checked');
+        if (selectedCheckbox) {
+            const row = selectedCheckbox.closest('tr');
+            const corpName = row.cells[1].textContent.trim();
+            const corpId = selectedCheckbox.dataset.id;
+            
+            this.selectedCorp = { id: corpId, name: corpName };
+            document.getElementById('selectedCorpName').textContent = corpName;
+            document.getElementById('selectedCorp').style.display = 'flex';
+            this.renderCorpTable();
+        } else {
+            alert('선택할 법인을 체크하세요.');
         }
     }
+
 
     renderCorpTable() {
         const tbody = document.getElementById('corpTableBody');
@@ -3658,6 +3722,32 @@ class CorporateManagementApp {
         document.getElementById('newPassword').value = '';
         document.getElementById('confirmPassword').value = '';
     }
+
+    // 헤더 로고/제목 클릭 시 대시보드로 이동
+    bindHeaderNavigation() {
+        const headerLogo = document.getElementById('headerLogo');
+        const headerTitle = document.getElementById('headerTitle');
+        
+        if (headerLogo) {
+            headerLogo.addEventListener('click', () => {
+                this.navigateToPage({ target: { dataset: { page: 'dashboard' } } });
+            });
+        }
+        
+        if (headerTitle) {
+            headerTitle.addEventListener('click', () => {
+                this.navigateToPage({ target: { dataset: { page: 'dashboard' } } });
+            });
+        }
+    }
+
+    // 프로필 이메일 업데이트
+    updateProfileEmail() {
+        const profileEmail = document.getElementById('profileEmail');
+        if (profileEmail && this.currentUser) {
+            profileEmail.value = this.currentUser.email;
+        }
+    }
 }
 
 // 상품 관리 관련 함수들
@@ -5016,4 +5106,8 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     });
+
+
+    // 전역에 app 객체 할당
+    window.app = app;
 });
