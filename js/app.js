@@ -200,30 +200,55 @@ class CorporateManagementApp {
             togglePassword.addEventListener('click', () => this.togglePassword());
             console.log('비밀번호 토글 이벤트 바인딩 완료'); // 디버깅용
         }
+        
+        // 사이드바 토글 버튼
+        const sidebarToggle = document.getElementById('sidebarToggle');
+        if (sidebarToggle) {
+            sidebarToggle.addEventListener('click', () => this.toggleSidebar());
+        }
+        
+        // 사이드바 외부 클릭 시 닫기
+        document.addEventListener('click', (e) => {
+            const sidebar = document.getElementById('sidebar');
+            const sidebarToggle = document.getElementById('sidebarToggle');
+            
+            if (window.innerWidth <= 768 && 
+                sidebar && 
+                !sidebar.contains(e.target) && 
+                !sidebarToggle.contains(e.target)) {
+                this.closeSidebar();
+            }
+        });
+        
+        // 윈도우 리사이즈 이벤트
+        window.addEventListener('resize', () => this.handleResize());
+        
+        // 사이드바 하위메뉴 직접 이벤트 바인딩 (추가 보장)
+        this.bindSidebarEvents();
     }
 
     bindMainAppEvents() {
         console.log('이벤트 바인딩 시작'); // 디버깅용
         
-        // 각 네비게이션 버튼에 직접 이벤트 바인딩
-        const navItems = document.querySelectorAll('.nav-item');
-        console.log('찾은 네비게이션 버튼 개수:', navItems.length); // 디버깅용
+        // 단일 메뉴 항목들만 직접 이벤트 바인딩 (하위메뉴가 없는 것들)
+        const singleNavItems = document.querySelectorAll('.nav-item:not(.nav-parent):not(.nav-child)');
+        console.log('찾은 단일 네비게이션 버튼 개수:', singleNavItems.length); // 디버깅용
         
-        navItems.forEach((navItem, index) => {
-            console.log(`버튼 ${index}:`, navItem.dataset.page); // 디버깅용
+        singleNavItems.forEach((navItem, index) => {
+            console.log(`단일 버튼 ${index}:`, navItem.dataset.page); // 디버깅용
             navItem.addEventListener('click', (e) => {
                 e.preventDefault();
-                console.log('네비게이션 클릭됨:', navItem.dataset.page); // 디버깅용
+                console.log('단일 네비게이션 클릭됨:', navItem.dataset.page); // 디버깅용
                 this.navigateToPage({ target: navItem });
             });
         });
         
         // 전역 이벤트 위임으로 모든 클릭 처리
         document.addEventListener('click', (e) => {
-            // 네비게이션 메뉴 클릭 (백업용)
-            if (e.target.closest('.nav-item')) {
+            // 단일 네비게이션 메뉴 클릭 (백업용)
+            if (e.target.closest('.nav-item:not(.nav-parent):not(.nav-child)')) {
                 const navItem = e.target.closest('.nav-item');
-                console.log('백업 네비게이션 클릭됨:', navItem.dataset.page); // 디버깅용
+                console.log('백업 단일 네비게이션 클릭됨:', navItem.dataset.page);
                 this.navigateToPage({ target: navItem });
                 return;
             }
@@ -1127,6 +1152,10 @@ class CorporateManagementApp {
         this.bindMainAppEvents();
         this.bindHeaderNavigation();
         
+        // 사이드바 이벤트 다시 바인딩
+        // 사이드바 이벤트 바인딩 - 즉시 실행
+        this.bindSidebarEvents();
+        
         // 대시보드로 이동
         document.querySelectorAll('.page').forEach(p => {
             p.classList.remove('active');
@@ -1162,6 +1191,108 @@ class CorporateManagementApp {
         }
     }
 
+    // 사이드바 토글 기능
+    toggleSidebar() {
+        const sidebar = document.getElementById('sidebar');
+        const mainWrapper = document.querySelector('.main-wrapper');
+        
+        if (!sidebar || !mainWrapper) return;
+        
+        if (window.innerWidth <= 768) {
+            // 모바일에서는 사이드바를 오버레이로 표시/숨김
+            sidebar.classList.toggle('show');
+        } else {
+            // 데스크톱에서는 사이드바를 접었다 펼침
+            sidebar.classList.toggle('collapsed');
+            mainWrapper.classList.toggle('sidebar-collapsed');
+        }
+    }
+
+    // 사이드바 닫기
+    closeSidebar() {
+        const sidebar = document.getElementById('sidebar');
+        if (sidebar) {
+            sidebar.classList.remove('show');
+        }
+    }
+
+    // 윈도우 리사이즈 처리
+    handleResize() {
+        const sidebar = document.getElementById('sidebar');
+        const mainWrapper = document.querySelector('.main-wrapper');
+        
+        if (!sidebar || !mainWrapper) return;
+        
+        if (window.innerWidth > 768) {
+            // 데스크톱에서는 사이드바를 항상 표시
+            sidebar.classList.remove('show');
+            sidebar.classList.remove('collapsed');
+            mainWrapper.classList.remove('sidebar-collapsed');
+        } else {
+            // 모바일에서는 사이드바를 숨김
+            sidebar.classList.remove('collapsed');
+            mainWrapper.classList.remove('sidebar-collapsed');
+            sidebar.classList.remove('show');
+        }
+    }
+
+    // 사이드바 이벤트 바인딩
+    bindSidebarEvents() {
+        console.log('사이드바 이벤트 바인딩 시작');
+        
+        // 상위메뉴 클릭 이벤트
+        document.querySelectorAll('.nav-parent').forEach(parent => {
+            parent.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                const navGroup = parent.closest('.nav-group');
+                console.log('상위메뉴 클릭:', parent.dataset.page);
+                
+                // 다른 모든 그룹 닫기
+                document.querySelectorAll('.nav-group').forEach(group => {
+                    if (group !== navGroup) {
+                        group.classList.remove('expanded');
+                    }
+                });
+                
+                // 현재 그룹 토글
+                navGroup.classList.toggle('expanded');
+                console.log('하위메뉴 토글:', navGroup.classList.contains('expanded') ? '펼쳐짐' : '접힘');
+            });
+        });
+        
+        // 하위메뉴 클릭 이벤트
+        document.querySelectorAll('.nav-child').forEach(child => {
+            child.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                const submenu = child.dataset.submenu;
+                const navGroup = child.closest('.nav-group');
+                const parent = navGroup.querySelector('.nav-parent');
+                
+                console.log('하위메뉴 클릭:', submenu);
+                
+                // 상위메뉴 페이지로 이동
+                this.navigateToPage({ target: parent });
+                
+                // 하위메뉴 처리
+                this.handleSubmenuClick({ target: { dataset: { submenu: submenu } } });
+                
+                // 헤더 부제목 업데이트
+                this.updateHeaderSubtitle(submenu);
+                
+                // 모바일에서 사이드바 닫기
+                if (window.innerWidth <= 768) {
+                    this.closeSidebar();
+                }
+            });
+        });
+        
+        console.log('사이드바 이벤트 바인딩 완료');
+    }
+
     navigateToPage(e) {
         console.log('navigateToPage 호출됨:', e); // 디버깅용
         
@@ -1192,6 +1323,14 @@ class CorporateManagementApp {
         if (targetPage) {
             targetPage.classList.add('active');
             console.log('페이지 전환 성공:', page);
+            
+            // 모바일에서 페이지 전환 시 사이드바 닫기
+            if (window.innerWidth <= 768) {
+                this.closeSidebar();
+            }
+            
+            // 헤더 하위메뉴 초기화
+            this.clearHeaderSubtitle();
         } else {
             console.log('페이지를 찾을 수 없음:', page + 'Page');
         }
@@ -1201,6 +1340,11 @@ class CorporateManagementApp {
         // 설정 페이지인 경우 초기화
         if (page === 'settings') {
             this.initializeSettingsPage();
+            // 설정 페이지의 첫 번째 섹션을 활성화
+            const firstSection = document.querySelector('#settingsPage .settings-section');
+            if (firstSection) {
+                firstSection.classList.add('active');
+            }
         }
     }
 
@@ -1662,37 +1806,135 @@ class CorporateManagementApp {
     }
 
     handleSubmenuClick(e) {
-        e.preventDefault();
         const submenu = e.target.dataset.submenu;
-        const page = e.target.closest('.page');
         
-        console.log('서브메뉴 클릭:', submenu); // 디버깅용
+        console.log('서브메뉴 클릭:', submenu);
         
-        if (!page || !submenu) {
-            console.log('페이지 또는 서브메뉴 정보 없음');
+        if (!submenu) {
+            console.log('서브메뉴 정보 없음');
             return;
         }
 
-        // 모든 서브메뉴 버튼 비활성화
-        page.querySelectorAll('[data-submenu]').forEach(btn => {
-            btn.classList.remove('active');
+        // 모든 하위메뉴 아이템 비활성화
+        document.querySelectorAll('.nav-child').forEach(item => {
+            item.classList.remove('active');
         });
         
         // 클릭한 버튼 활성화
         e.target.classList.add('active');
         
         // 모든 서브메뉴 콘텐츠 숨기기
-        page.querySelectorAll('.submenu-content').forEach(content => {
+        document.querySelectorAll('.submenu-content').forEach(content => {
             content.classList.remove('active');
         });
         
+        // 설정 페이지의 모든 섹션 숨기기
+        document.querySelectorAll('#settingsPage .settings-section').forEach(section => {
+            section.classList.remove('active');
+        });
+        
         // 해당 서브메뉴 콘텐츠 보이기
-        const targetContent = page.querySelector(`#${submenu}Submenu`);
+        let targetContent = document.getElementById(`${submenu}Submenu`);
+        
+        // 설정 페이지의 경우 다른 ID 패턴 사용
+        if (!targetContent) {
+            targetContent = document.getElementById(submenu);
+        }
+        
+        console.log('찾는 콘텐츠 ID:', `${submenu}Submenu`, '또는', submenu);
+        console.log('찾은 콘텐츠:', targetContent);
+        
         if (targetContent) {
             targetContent.classList.add('active');
             console.log('서브메뉴 전환 성공:', submenu);
         } else {
-            console.log('서브메뉴 콘텐츠를 찾을 수 없음:', `${submenu}Submenu`);
+            console.log('서브메뉴 콘텐츠를 찾을 수 없음:', submenu);
+        }
+        
+        // 헤더에 하위메뉴 명칭 표시
+        this.updateHeaderSubtitle(submenu);
+    }
+
+    // 헤더 하위메뉴 명칭 업데이트
+    updateHeaderSubtitle(submenu) {
+        const headerSubtitle = document.getElementById('headerSubtitle');
+        if (!headerSubtitle) return;
+        
+        const submenuNames = {
+            'directors': '이사 & 감사',
+            'documents': '법인 필수 서류',
+            'taxAssets': '절세자산',
+            'investmentAssets': '투자자산',
+            'realEstateAssets': '부동산자산',
+            'otherAssets': '기타자산',
+            'settlement': '결산자료 관리',
+            'contracts': '계약서/영수증 관리',
+            'financial': '연도별 재무 관리',
+            'hrDocs': '인사 서류 관리',
+            'payroll': '급여 관리',
+            'education': '의무교육 관리',
+            'employment': '고용지원금 관리',
+            'assetReports': '자산관리 보고서',
+            'valuation': '주당 가치 평가',
+            'dividend': '배당 보고서',
+            'templates': '각종 서식 자료',
+            'company-info': '회사 정보 설정',
+            'corporate-accounts': '법인 계정 관리',
+            'staff-management': '담당자 정보',
+            'monitoring': '모니터링',
+            'product-management': '상품 관리',
+            'document-management': '서류명 관리',
+            'profile': '프로필/계정 관리',
+            'notifications': '알림 설정'
+        };
+        
+        const parentNames = {
+            'directors': '행정팀',
+            'documents': '행정팀',
+            'taxAssets': '자산관리팀',
+            'investmentAssets': '자산관리팀',
+            'realEstateAssets': '자산관리팀',
+            'otherAssets': '자산관리팀',
+            'settlement': '회계팀',
+            'contracts': '회계팀',
+            'financial': '회계팀',
+            'hrDocs': '인사팀',
+            'payroll': '인사팀',
+            'education': '인사팀',
+            'employment': '인사팀',
+            'assetReports': '보고서',
+            'valuation': '보고서',
+            'dividend': '보고서',
+            'templates': '보고서',
+            'company-info': '설정',
+            'corporate-accounts': '설정',
+            'staff-management': '설정',
+            'monitoring': '설정',
+            'product-management': '설정',
+            'document-management': '설정',
+            'profile': '설정',
+            'notifications': '설정'
+        };
+        
+        const submenuName = submenuNames[submenu] || '';
+        const parentName = parentNames[submenu] || '';
+        
+        console.log('헤더 서브타이틀 업데이트:', { submenu, submenuName, parentName });
+        
+        if (submenuName && parentName) {
+            headerSubtitle.textContent = `${parentName} > ${submenuName}`;
+            console.log('헤더에 표시:', `${parentName} > ${submenuName}`);
+        } else {
+            headerSubtitle.textContent = submenuName;
+            console.log('헤더에 표시:', submenuName);
+        }
+    }
+
+    // 헤더 하위메뉴 명칭 초기화
+    clearHeaderSubtitle() {
+        const headerSubtitle = document.getElementById('headerSubtitle');
+        if (headerSubtitle) {
+            headerSubtitle.textContent = '';
         }
     }
 

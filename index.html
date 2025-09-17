@@ -58,65 +58,191 @@
 
     <!-- 메인 대시보드 -->
     <div id="mainApp" class="main-app" style="display: none;">
-        <!-- 헤더 -->
-        <header class="header">
-            <div class="header-left">
-                <img src="images/Logo_DrGM_3color.png" alt="로고" class="header-logo" id="headerLogo" style="cursor: pointer;">
-                <h1 class="header-title" id="headerTitle" style="cursor: pointer;">법인 관리 프로그램</h1>
-            </div>
-            
-            <nav class="header-nav">
+        <!-- 사이드바 -->
+        <aside class="sidebar" id="sidebar">
+            <nav class="sidebar-nav">
                 <button class="nav-item active" data-page="dashboard">
                     <i class="fas fa-tachometer-alt"></i>
                     <span>대시보드</span>
                 </button>
-                <button class="nav-item" data-page="admin">
-                    <i class="fas fa-building"></i>
-                    <span>행정팀</span>
-                </button>
-                <button class="nav-item" data-page="assets">
-                    <i class="fas fa-chart-line"></i>
-                    <span>자산관리팀</span>
-                </button>
-                <button class="nav-item" data-page="accounting">
-                    <i class="fas fa-calculator"></i>
-                    <span>회계팀</span>
-                </button>
-                <button class="nav-item" data-page="hr">
-                    <i class="fas fa-users"></i>
-                    <span>인사팀</span>
-                </button>
-                <button class="nav-item" data-page="reports">
-                    <i class="fas fa-file-alt"></i>
-                    <span>보고서</span>
-                </button>
+                
+                <!-- 행정관리 메뉴 -->
+                <div class="nav-group">
+                    <button class="nav-item nav-parent" data-page="admin" onclick="toggleSubmenu(this)">
+                        <i class="fas fa-building"></i>
+                        <span>행정관리</span>
+                        <i class="fas fa-chevron-down nav-arrow"></i>
+                    </button>
+                    <div class="nav-submenu">
+                        <button class="nav-item nav-child" data-submenu="shareholders" onclick="showSubmenu('shareholders')">
+                            <span>주주현황</span>
+                        </button>
+                        <button class="nav-item nav-child" data-submenu="directors" onclick="showSubmenu('directors')">
+                            <span>이사 & 감사 임기 관리</span>
+                        </button>
+                        <button class="nav-item nav-child" data-submenu="documents" onclick="showSubmenu('documents')">
+                            <span>법인 필수 서류 통합 관리</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- 자산관리 메뉴 -->
+                <div class="nav-group">
+                    <button class="nav-item nav-parent" data-page="assets" onclick="toggleSubmenu(this)">
+                        <i class="fas fa-chart-line"></i>
+                        <span>자산관리</span>
+                        <i class="fas fa-chevron-down nav-arrow"></i>
+                    </button>
+                    <div class="nav-submenu">
+                        <button class="nav-item nav-child" data-submenu="taxAssets" onclick="showSubmenu('taxAssets')">
+                            <span>절세자산</span>
+                        </button>
+                        <button class="nav-item nav-child" data-submenu="investmentAssets" onclick="showSubmenu('investmentAssets')">
+                            <span>투자자산</span>
+                        </button>
+                        <button class="nav-item nav-child" data-submenu="realEstateAssets" onclick="showSubmenu('realEstateAssets')">
+                            <span>부동산자산</span>
+                        </button>
+                        <button class="nav-item nav-child" data-submenu="otherAssets" onclick="showSubmenu('otherAssets')">
+                            <span>기타자산</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- 회계관리 메뉴 -->
+                <div class="nav-group">
+                    <button class="nav-item nav-parent" data-page="accounting" onclick="toggleSubmenu(this)">
+                        <i class="fas fa-calculator"></i>
+                        <span>회계관리</span>
+                        <i class="fas fa-chevron-down nav-arrow"></i>
+                    </button>
+                    <div class="nav-submenu">
+                        <button class="nav-item nav-child" data-submenu="settlement" onclick="showSubmenu('settlement')">
+                            <span>결산자료 관리</span>
+                        </button>
+                        <button class="nav-item nav-child" data-submenu="contracts" onclick="showSubmenu('contracts')">
+                            <span>계약서/영수증 관리</span>
+                        </button>
+                        <button class="nav-item nav-child" data-submenu="financial" onclick="showSubmenu('financial')">
+                            <span>연도별 재무 관리</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- 인사관리 메뉴 -->
+                <div class="nav-group">
+                    <button class="nav-item nav-parent" data-page="hr" onclick="toggleSubmenu(this)">
+                        <i class="fas fa-users"></i>
+                        <span>인사관리</span>
+                        <i class="fas fa-chevron-down nav-arrow"></i>
+                    </button>
+                    <div class="nav-submenu">
+                        <button class="nav-item nav-child" data-submenu="hrDocs" onclick="showSubmenu('hrDocs')">
+                            <span>인사 서류 관리</span>
+                        </button>
+                        <button class="nav-item nav-child" data-submenu="payroll" onclick="showSubmenu('payroll')">
+                            <span>급여 관리</span>
+                        </button>
+                        <button class="nav-item nav-child" data-submenu="education" onclick="showSubmenu('education')">
+                            <span>의무교육 관리</span>
+                        </button>
+                        <button class="nav-item nav-child" data-submenu="employment" onclick="showSubmenu('employment')">
+                            <span>고용지원금 관리</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- 보고서 메뉴 -->
+                <div class="nav-group">
+                    <button class="nav-item nav-parent" data-page="reports" onclick="toggleSubmenu(this)">
+                        <i class="fas fa-file-alt"></i>
+                        <span>보고서</span>
+                        <i class="fas fa-chevron-down nav-arrow"></i>
+                    </button>
+                    <div class="nav-submenu">
+                        <button class="nav-item nav-child" data-submenu="assetReports" onclick="showSubmenu('assetReports')">
+                            <span>자산관리 보고서</span>
+                        </button>
+                        <button class="nav-item nav-child" data-submenu="valuation" onclick="showSubmenu('valuation')">
+                            <span>주당 가치 평가</span>
+                        </button>
+                        <button class="nav-item nav-child" data-submenu="dividend" onclick="showSubmenu('dividend')">
+                            <span>배당 보고서</span>
+                        </button>
+                        <button class="nav-item nav-child" data-submenu="templates" onclick="showSubmenu('templates')">
+                            <span>각종 서식 자료</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- 설정 메뉴 -->
+                <div class="nav-group">
+                    <button class="nav-item nav-parent" data-page="settings" onclick="toggleSubmenu(this)">
+                        <i class="fas fa-cog"></i>
+                        <span>설정</span>
+                        <i class="fas fa-chevron-down nav-arrow"></i>
+                    </button>
+                    <div class="nav-submenu">
+                        <button class="nav-item nav-child" data-submenu="company-info" onclick="showSubmenu('company-info')">
+                            <span>회사 정보 설정</span>
+                        </button>
+                        <button class="nav-item nav-child" data-submenu="corporate-accounts" onclick="showSubmenu('corporate-accounts')">
+                            <span>법인 계정 관리</span>
+                        </button>
+                        <button class="nav-item nav-child" data-submenu="product-management" onclick="showSubmenu('product-management')">
+                            <span>상품 관리</span>
+                        </button>
+                        <button class="nav-item nav-child" data-submenu="document-management" onclick="showSubmenu('document-management')">
+                            <span>서류명 관리</span>
+                        </button>
+                        <button class="nav-item nav-child" data-submenu="notification-management" onclick="showSubmenu('notification-management')">
+                            <span>알림 관리</span>
+                        </button>
+                        <button class="nav-item nav-child" data-submenu="monitoring" onclick="showSubmenu('monitoring')">
+                            <span>모니터링</span>
+                        </button>
+                    </div>
+                </div>
+                
                 <button class="nav-item" data-page="notices">
                     <i class="fas fa-bullhorn"></i>
                     <span>공지사항</span>
                 </button>
-                <button class="nav-item" data-page="settings">
-                    <i class="fas fa-cog"></i>
-                    <span>설정</span>
-                </button>
             </nav>
-            
-            <div class="header-right">
-                <div class="notification-icon">
-                    <i class="fas fa-bell"></i>
-                    <span class="notification-badge">3</span>
+        </aside>
+
+        <!-- 메인 콘텐츠 영역 -->
+        <div class="main-wrapper">
+            <!-- 헤더 -->
+            <header class="header">
+                <div class="header-left">
+                    <button class="sidebar-toggle" id="sidebarToggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <img src="images/Logo_DrGM_3color.png" alt="로고" class="header-logo" id="headerLogo" style="cursor: pointer;">
+                    <div class="header-title-section">
+                        <h1 class="header-title" id="headerTitle" style="cursor: pointer;">법인 관리 프로그램</h1>
+                        <span class="header-subtitle" id="headerSubtitle"></span>
+                    </div>
                 </div>
                 
-                <div class="user-menu">
-                    <div class="user-info">
-                        <span class="user-name" id="userName">관리자</span>
-                        <i class="fas fa-chevron-down"></i>
+                <div class="header-right">
+                    <div class="notification-icon">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-badge">3</span>
                     </div>
-                    <div class="user-dropdown">
-                        <a href="#" data-action="logout">로그아웃</a>
+                    
+                    <div class="user-menu">
+                        <div class="user-info">
+                            <span class="user-name" id="userName">관리자</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="user-dropdown">
+                            <a href="#" data-action="logout">로그아웃</a>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </header>
+            </header>
 
         <!-- 메인 콘텐츠 -->
         <main class="main-content">
@@ -230,15 +356,76 @@
             <!-- 행정팀 페이지 -->
             <div id="adminPage" class="page">
                 <div class="page-header">
-                    <h2>행정팀</h2>
-                    <div class="submenu">
-                        <button class="btn btn-outline active" data-submenu="directors">이사 & 감사</button>
-                        <button class="btn btn-outline" data-submenu="documents">법인 필수 서류</button>
-                    </div>
+                    <h2>행정관리</h2>
                 </div>
 
-                <!-- 이사 & 감사 관리 -->
-                <div id="directorsSubmenu" class="submenu-content active">
+                <!-- 주주현황 하위메뉴 -->
+                <div id="shareholdersSubmenu" class="submenu-content">
+                    <div class="page-header">
+                        <h2>주주현황</h2>
+                    </div>
+                    
+                    <div class="table-controls">
+                        <button class="btn btn-primary" id="addShareholderBtn">
+                            <i class="fas fa-plus"></i>
+                            주주 정보 등록
+                        </button>
+                        <button class="btn btn-secondary" id="previewShareholderBtn">
+                            <i class="fas fa-eye"></i>
+                            미리보기
+                        </button>
+                        <button class="btn btn-outline" id="downloadShareholderBtn">
+                            <i class="fas fa-download"></i>
+                            다운로드
+                        </button>
+                    </div>
+
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th><input type="checkbox" id="selectAllShareholders"></th>
+                                <th>이름</th>
+                                <th>주민번호</th>
+                                <th>액면가</th>
+                                <th>보유좌수</th>
+                                <th>가액</th>
+                                <th>보유비율</th>
+                                <th>해외거주여부</th>
+                                <th>미성년자여부</th>
+                                <th>액션</th>
+                            </tr>
+                        </thead>
+                        <tbody id="shareholdersTableBody">
+                            <!-- 샘플 데이터 -->
+                            <tr>
+                                <td><input type="checkbox" class="shareholder-checkbox"></td>
+                                <td>김대표</td>
+                                <td>123456-1234567</td>
+                                <td>500원</td>
+                                <td>1,000주</td>
+                                <td>500,000원</td>
+                                <td>50%</td>
+                                <td>아니오</td>
+                                <td>아니오</td>
+                                <td>
+                                    <button class="btn btn-sm btn-outline" onclick="editShareholder('1')" title="수정">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-danger" onclick="deleteShareholder('1')" title="삭제">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- 이사 & 감사 임기 관리 하위메뉴 -->
+                <div id="directorsSubmenu" class="submenu-content">
+                    <div class="page-header">
+                        <h2>이사 & 감사 임기 관리</h2>
+                    </div>
+                    
                     <div class="table-controls">
                         <button class="btn btn-primary" id="addDirectorBtn">
                             <i class="fas fa-plus"></i>
@@ -267,17 +454,49 @@
                             </tr>
                         </thead>
                         <tbody id="directorsTableBody">
-                            <!-- 동적으로 생성됨 -->
+                            <!-- 샘플 데이터 -->
+                            <tr>
+                                <td><input type="checkbox" class="director-checkbox"></td>
+                                <td>김대표</td>
+                                <td>대표이사</td>
+                                <td>2021-01-15</td>
+                                <td>2024-01-15</td>
+                                <td><span class="status-badge status-active">활성</span></td>
+                                <td>
+                                    <button class="btn btn-sm btn-outline" onclick="editDirector('1')" title="수정">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-danger" onclick="deleteDirector('1')" title="삭제">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
 
-                <!-- 법인 필수 서류 관리 -->
+                <!-- 법인 필수 서류 통합 관리 하위메뉴 -->
                 <div id="documentsSubmenu" class="submenu-content">
+                    <div class="page-header">
+                        <h2>법인 필수 서류 통합 관리</h2>
+                    </div>
+                    
                     <div class="table-controls">
                         <button class="btn btn-primary" id="uploadDocBtn">
                             <i class="fas fa-upload"></i>
                             업로드
+                        </button>
+                        <button class="btn btn-outline" id="viewDocsBtn">
+                            <i class="fas fa-eye"></i>
+                            보기
+                        </button>
+                        <button class="btn btn-outline" id="downloadDocsBtn">
+                            <i class="fas fa-download"></i>
+                            다운로드
+                        </button>
+                        <button class="btn btn-danger" id="deleteDocsBtn">
+                            <i class="fas fa-trash"></i>
+                            삭제
                         </button>
                     </div>
 
@@ -290,31 +509,47 @@
                                 <th>등록일</th>
                                 <th>만료일</th>
                                 <th>알림 상태</th>
-                                <th>비고</th>
                                 <th>액션</th>
                             </tr>
                         </thead>
                         <tbody id="documentsTableBody">
-                            <!-- 동적으로 생성됨 -->
+                            <!-- 샘플 데이터 -->
+                            <tr>
+                                <td><input type="checkbox" class="document-checkbox"></td>
+                                <td>사업자등록증</td>
+                                <td>3년</td>
+                                <td>2021-01-15</td>
+                                <td>2024-01-15</td>
+                                <td><span class="status-badge status-active">활성</span></td>
+                                <td>
+                                    <button class="btn btn-sm btn-outline" onclick="viewDocument('1')" title="보기">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-outline" onclick="downloadDocument('1')" title="다운로드">
+                                        <i class="fas fa-download"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-danger" onclick="deleteDocument('1')" title="삭제">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
 
-            <!-- 자산관리팀 페이지 -->
+            <!-- 자산관리 페이지 -->
             <div id="assetsPage" class="page">
                 <div class="page-header">
-                    <h2>자산관리팀</h2>
-                    <div class="submenu">
-                        <button class="btn btn-outline active" data-submenu="taxAssets">절세자산</button>
-                        <button class="btn btn-outline" data-submenu="investmentAssets">투자자산</button>
-                        <button class="btn btn-outline" data-submenu="realEstateAssets">부동산자산</button>
-                        <button class="btn btn-outline" data-submenu="otherAssets">기타자산</button>
-                    </div>
+                    <h2>자산관리</h2>
                 </div>
 
                 <!-- 절세자산 -->
-                <div id="taxAssetsSubmenu" class="submenu-content active">
+                <div id="taxAssetsSubmenu" class="submenu-content">
+                    <div class="page-header">
+                        <h2>절세자산</h2>
+                    </div>
+                    
                     <div class="table-controls">
                         <button class="btn btn-primary" id="addTaxAssetBtn">
                             <i class="fas fa-plus"></i>
@@ -366,21 +601,197 @@
                         </table>
                     </div>
                 </div>
+                
+                <!-- 투자자산 -->
+                <div id="investmentAssetsSubmenu" class="submenu-content">
+                    <div class="page-header">
+                        <h2>투자자산</h2>
+                    </div>
+                    
+                    <div class="table-controls">
+                        <button class="btn btn-primary" id="addInvestmentAssetBtn">
+                            <i class="fas fa-plus"></i>
+                            추가
+                        </button>
+                        <button class="btn btn-secondary" id="editSelectedInvestmentBtn" disabled>
+                            <i class="fas fa-edit"></i>
+                            선택 수정
+                        </button>
+                        <button class="btn btn-danger" id="deleteSelectedInvestmentBtn" disabled>
+                            <i class="fas fa-trash"></i>
+                            선택 삭제
+                        </button>
+                    </div>
+
+                    <div class="table-container">
+                        <table class="data-table wide-table">
+                            <thead>
+                                <tr>
+                                    <th><input type="checkbox" id="selectAllInvestmentAssets"></th>
+                                    <th>상품명</th>
+                                    <th>카테고리</th>
+                                    <th>거래기관</th>
+                                    <th>자산구분(1)</th>
+                                    <th>자산구분(2)</th>
+                                    <th>ING/EXIT</th>
+                                    <th>납입주기</th>
+                                    <th>정기납입액</th>
+                                    <th>일시납입액</th>
+                                    <th>납입원금</th>
+                                    <th>중도인출</th>
+                                    <th>평가금액</th>
+                                    <th>정기수익</th>
+                                    <th>가입일</th>
+                                    <th>운영기간</th>
+                                    <th>예상만기일</th>
+                                    <th>실제만기일</th>
+                                    <th>원만기일</th>
+                                    <th>화폐</th>
+                                    <th>총기대수익률</th>
+                                    <th>연기대수익률</th>
+                                    <th>비고</th>
+                                    <th>액션</th>
+                                </tr>
+                            </thead>
+                            <tbody id="investmentAssetsTableBody">
+                                <!-- 동적으로 생성됨 -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- 부동산자산 -->
+                <div id="realEstateAssetsSubmenu" class="submenu-content">
+                    <div class="page-header">
+                        <h2>부동산자산</h2>
+                    </div>
+                    
+                    <div class="table-controls">
+                        <button class="btn btn-primary" id="addRealEstateAssetBtn">
+                            <i class="fas fa-plus"></i>
+                            추가
+                        </button>
+                        <button class="btn btn-secondary" id="editSelectedRealEstateBtn" disabled>
+                            <i class="fas fa-edit"></i>
+                            선택 수정
+                        </button>
+                        <button class="btn btn-danger" id="deleteSelectedRealEstateBtn" disabled>
+                            <i class="fas fa-trash"></i>
+                            선택 삭제
+                        </button>
+                    </div>
+
+                    <div class="table-container">
+                        <table class="data-table wide-table">
+                            <thead>
+                                <tr>
+                                    <th><input type="checkbox" id="selectAllRealEstateAssets"></th>
+                                    <th>상품명</th>
+                                    <th>카테고리</th>
+                                    <th>거래기관</th>
+                                    <th>자산구분(1)</th>
+                                    <th>자산구분(2)</th>
+                                    <th>ING/EXIT</th>
+                                    <th>납입주기</th>
+                                    <th>일시납입액</th>
+                                    <th>납입원금</th>
+                                    <th>평가금액</th>
+                                    <th>정기수익</th>
+                                    <th>가입일</th>
+                                    <th>운영기간</th>
+                                    <th>예상만기일</th>
+                                    <th>실제만기일</th>
+                                    <th>원만기일</th>
+                                    <th>총기대수익률</th>
+                                    <th>연기대수익률</th>
+                                    <th>비고</th>
+                                    <th>주소</th>
+                                    <th>연관부채</th>
+                                    <th>부채액</th>
+                                    <th>대출금리</th>
+                                    <th>상환방법</th>
+                                    <th>거치기간</th>
+                                    <th>상환기간</th>
+                                    <th>월상환금액</th>
+                                    <th>대출잔액</th>
+                                    <th>액션</th>
+                                </tr>
+                            </thead>
+                            <tbody id="realEstateAssetsTableBody">
+                                <!-- 동적으로 생성됨 -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- 기타자산 -->
+                <div id="otherAssetsSubmenu" class="submenu-content">
+                    <div class="page-header">
+                        <h2>기타자산</h2>
+                    </div>
+                    
+                    <div class="table-controls">
+                        <button class="btn btn-primary" id="addOtherAssetBtn">
+                            <i class="fas fa-plus"></i>
+                            추가
+                        </button>
+                        <button class="btn btn-secondary" id="editSelectedOtherBtn" disabled>
+                            <i class="fas fa-edit"></i>
+                            선택 수정
+                        </button>
+                        <button class="btn btn-danger" id="deleteSelectedOtherBtn" disabled>
+                            <i class="fas fa-trash"></i>
+                            선택 삭제
+                        </button>
+                    </div>
+
+                    <div class="table-container">
+                        <table class="data-table wide-table">
+                            <thead>
+                                <tr>
+                                    <th><input type="checkbox" id="selectAllOtherAssets"></th>
+                                    <th>상품명</th>
+                                    <th>카테고리</th>
+                                    <th>거래기관</th>
+                                    <th>자산구분(1)</th>
+                                    <th>자산구분(2)</th>
+                                    <th>ING/EXIT</th>
+                                    <th>납입주기</th>
+                                    <th>일시납입액</th>
+                                    <th>납입원금</th>
+                                    <th>평가금액</th>
+                                    <th>정기수익</th>
+                                    <th>가입일</th>
+                                    <th>운영기간</th>
+                                    <th>예상만기일</th>
+                                    <th>실제만기일</th>
+                                    <th>원만기일</th>
+                                    <th>총기대수익률</th>
+                                    <th>연기대수익률</th>
+                                    <th>비고</th>
+                                    <th>액션</th>
+                                </tr>
+                            </thead>
+                            <tbody id="otherAssetsTableBody">
+                                <!-- 동적으로 생성됨 -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
 
-            <!-- 회계팀 페이지 -->
+            <!-- 회계관리 페이지 -->
             <div id="accountingPage" class="page">
                 <div class="page-header">
-                    <h2>회계팀</h2>
-                    <div class="submenu">
-                        <button class="btn btn-outline active" data-submenu="settlement">결산자료 관리</button>
-                        <button class="btn btn-outline" data-submenu="contracts">계약서/영수증 관리</button>
-                        <button class="btn btn-outline" data-submenu="financial">연도별 재무 관리</button>
-                    </div>
+                    <h2>회계관리</h2>
                 </div>
 
                 <!-- 결산자료 관리 -->
-                <div id="settlementSubmenu" class="submenu-content active">
+                <div id="settlementSubmenu" class="submenu-content">
+                    <div class="page-header">
+                        <h2>결산자료 관리</h2>
+                    </div>
+                    
                     <div class="table-controls">
                         <button class="btn btn-primary" id="uploadSettlementBtn">
                             <i class="fas fa-upload"></i>
@@ -404,22 +815,98 @@
                         </tbody>
                     </table>
                 </div>
+                
+                <!-- 계약서/영수증 관리 -->
+                <div id="contractsSubmenu" class="submenu-content">
+                    <div class="page-header">
+                        <h2>계약서/영수증 관리</h2>
+                    </div>
+                    
+                    <div class="table-controls">
+                        <button class="btn btn-primary" id="uploadContractBtn">
+                            <i class="fas fa-upload"></i>
+                            서류 업로드
+                        </button>
+                    </div>
+
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th><input type="checkbox" id="selectAllContracts"></th>
+                                <th>서류명</th>
+                                <th>등록일</th>
+                                <th>파일명</th>
+                                <th>업체명</th>
+                                <th>액션</th>
+                            </tr>
+                        </thead>
+                        <tbody id="contractsTableBody">
+                            <!-- 동적으로 생성됨 -->
+                        </tbody>
+                    </table>
+                </div>
+                
+                <!-- 연도별 재무 관리 -->
+                <div id="financialSubmenu" class="submenu-content">
+                    <div class="page-header">
+                        <h2>연도별 재무 관리</h2>
+                    </div>
+                    
+                    <!-- 그래프 영역 -->
+                    <div class="chart-container">
+                        <canvas id="financialChart"></canvas>
+                    </div>
+                    
+                    <div class="table-controls">
+                        <button class="btn btn-primary" id="addFinancialBtn">
+                            <i class="fas fa-plus"></i>
+                            입력
+                        </button>
+                        <button class="btn btn-secondary" id="editSelectedFinancialBtn" disabled>
+                            <i class="fas fa-edit"></i>
+                            선택 수정
+                        </button>
+                        <button class="btn btn-danger" id="deleteSelectedFinancialBtn" disabled>
+                            <i class="fas fa-trash"></i>
+                            선택 삭제
+                        </button>
+                    </div>
+
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th><input type="checkbox" id="selectAllFinancial"></th>
+                                <th>연도</th>
+                                <th>매출</th>
+                                <th>원가</th>
+                                <th>영업이익</th>
+                                <th>판관비용</th>
+                                <th>순이익</th>
+                                <th>자산</th>
+                                <th>부채</th>
+                                <th>순자산</th>
+                                <th>액션</th>
+                            </tr>
+                        </thead>
+                        <tbody id="financialTableBody">
+                            <!-- 동적으로 생성됨 -->
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
-            <!-- 인사팀 페이지 -->
+            <!-- 인사관리 페이지 -->
             <div id="hrPage" class="page">
                 <div class="page-header">
-                    <h2>인사팀</h2>
-                    <div class="submenu">
-                        <button class="btn btn-outline active" data-submenu="hrDocs">인사 서류 관리</button>
-                        <button class="btn btn-outline" data-submenu="payroll">급여 관리</button>
-                        <button class="btn btn-outline" data-submenu="education">의무교육 관리</button>
-                        <button class="btn btn-outline" data-submenu="employment">고용지원금 관리</button>
-                    </div>
+                    <h2>인사관리</h2>
                 </div>
 
                 <!-- 인사 서류 관리 -->
-                <div id="hrDocsSubmenu" class="submenu-content active">
+                <div id="hrDocsSubmenu" class="submenu-content">
+                    <div class="page-header">
+                        <h2>인사 서류 관리</h2>
+                    </div>
+                    
                     <div class="table-controls">
                         <button class="btn btn-primary" id="uploadHrDocBtn">
                             <i class="fas fa-upload"></i>
@@ -442,22 +929,107 @@
                         </tbody>
                     </table>
                 </div>
+                
+                <!-- 급여 관리 -->
+                <div id="payrollSubmenu" class="submenu-content">
+                    <div class="page-header">
+                        <h2>급여 관리</h2>
+                    </div>
+                    
+                    <div class="table-controls">
+                        <button class="btn btn-primary" id="uploadPayrollBtn">
+                            <i class="fas fa-upload"></i>
+                            업로드
+                        </button>
+                    </div>
+
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th><input type="checkbox" id="selectAllPayroll"></th>
+                                <th>급여월</th>
+                                <th>등록일</th>
+                                <th>파일명</th>
+                                <th>액션</th>
+                            </tr>
+                        </thead>
+                        <tbody id="payrollTableBody">
+                            <!-- 동적으로 생성됨 -->
+                        </tbody>
+                    </table>
+                </div>
+                
+                <!-- 의무교육 관리 -->
+                <div id="educationSubmenu" class="submenu-content">
+                    <div class="page-header">
+                        <h2>의무교육 관리</h2>
+                    </div>
+                    
+                    <div class="table-controls">
+                        <button class="btn btn-primary" id="uploadEducationBtn">
+                            <i class="fas fa-upload"></i>
+                            업로드
+                        </button>
+                    </div>
+
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th><input type="checkbox" id="selectAllEducation"></th>
+                                <th>서류명</th>
+                                <th>등록일</th>
+                                <th>파일명</th>
+                                <th>액션</th>
+                            </tr>
+                        </thead>
+                        <tbody id="educationTableBody">
+                            <!-- 동적으로 생성됨 -->
+                        </tbody>
+                    </table>
+                </div>
+                
+                <!-- 고용지원금 관리 -->
+                <div id="employmentSubmenu" class="submenu-content">
+                    <div class="page-header">
+                        <h2>고용지원금 관리</h2>
+                    </div>
+                    
+                    <div class="table-controls">
+                        <button class="btn btn-primary" id="uploadEmploymentBtn">
+                            <i class="fas fa-upload"></i>
+                            업로드
+                        </button>
+                    </div>
+
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th><input type="checkbox" id="selectAllEmployment"></th>
+                                <th>서류명</th>
+                                <th>등록일</th>
+                                <th>파일명</th>
+                                <th>액션</th>
+                            </tr>
+                        </thead>
+                        <tbody id="employmentTableBody">
+                            <!-- 동적으로 생성됨 -->
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
             <!-- 보고서 페이지 -->
             <div id="reportsPage" class="page">
                 <div class="page-header">
                     <h2>보고서</h2>
-                    <div class="submenu">
-                        <button class="btn btn-outline active" data-submenu="assetReports">자산관리 보고서</button>
-                        <button class="btn btn-outline" data-submenu="valuation">주당 가치 평가</button>
-                        <button class="btn btn-outline" data-submenu="dividend">배당 보고서</button>
-                        <button class="btn btn-outline" data-submenu="templates">각종 서식 자료</button>
-                    </div>
                 </div>
 
                 <!-- 자산관리 보고서 -->
-                <div id="assetReportsSubmenu" class="submenu-content active">
+                <div id="assetReportsSubmenu" class="submenu-content">
+                    <div class="page-header">
+                        <h2>연간/반기 자산관리 보고서</h2>
+                    </div>
+                    
                     <div class="table-controls">
                         <button class="btn btn-primary" id="uploadReportBtn">
                             <i class="fas fa-upload"></i>
@@ -477,6 +1049,94 @@
                             </tr>
                         </thead>
                         <tbody id="reportsTableBody">
+                            <!-- 동적으로 생성됨 -->
+                        </tbody>
+                    </table>
+                </div>
+                
+                <!-- 주당 가치 평가 보고서 -->
+                <div id="valuationSubmenu" class="submenu-content">
+                    <div class="page-header">
+                        <h2>주당 가치 평가 보고서</h2>
+                    </div>
+                    
+                    <div class="table-controls">
+                        <button class="btn btn-primary" id="uploadValuationBtn">
+                            <i class="fas fa-upload"></i>
+                            업로드
+                        </button>
+                    </div>
+
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th><input type="checkbox" id="selectAllValuation"></th>
+                                <th>보고서명</th>
+                                <th>연도</th>
+                                <th>등록일</th>
+                                <th>파일명</th>
+                                <th>액션</th>
+                            </tr>
+                        </thead>
+                        <tbody id="valuationTableBody">
+                            <!-- 동적으로 생성됨 -->
+                        </tbody>
+                    </table>
+                </div>
+                
+                <!-- 배당 보고서 -->
+                <div id="dividendSubmenu" class="submenu-content">
+                    <div class="page-header">
+                        <h2>배당 보고서</h2>
+                    </div>
+                    
+                    <div class="table-controls">
+                        <button class="btn btn-primary" id="uploadDividendBtn">
+                            <i class="fas fa-upload"></i>
+                            업로드
+                        </button>
+                    </div>
+
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th><input type="checkbox" id="selectAllDividend"></th>
+                                <th>보고서명</th>
+                                <th>연도</th>
+                                <th>등록일</th>
+                                <th>파일명</th>
+                                <th>액션</th>
+                            </tr>
+                        </thead>
+                        <tbody id="dividendTableBody">
+                            <!-- 동적으로 생성됨 -->
+                        </tbody>
+                    </table>
+                </div>
+                
+                <!-- 각종 서식 자료 -->
+                <div id="templatesSubmenu" class="submenu-content">
+                    <div class="page-header">
+                        <h2>각종 서식 자료</h2>
+                    </div>
+                    
+                    <div class="table-controls">
+                        <button class="btn btn-primary" id="uploadTemplateBtn">
+                            <i class="fas fa-upload"></i>
+                            업로드
+                        </button>
+                    </div>
+
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th><input type="checkbox" id="selectAllTemplates"></th>
+                                <th>서식명</th>
+                                <th>파일명</th>
+                                <th>액션</th>
+                            </tr>
+                        </thead>
+                        <tbody id="templatesTableBody">
                             <!-- 동적으로 생성됨 -->
                         </tbody>
                     </table>
@@ -519,64 +1179,19 @@
                     <h2>설정</h2>
                 </div>
 
-                <div class="settings-container">
-                    <!-- 설정 메뉴 -->
-                    <div class="settings-sidebar">
-                        <div class="settings-menu">
-                            <!-- 법인 전용 메뉴 -->
-                            <button class="settings-menu-item corporate-only" data-settings="company-info">
-                                <i class="fas fa-building"></i>
-                                <span>회사 정보 설정</span>
-                            </button>
-                            
-                            <!-- 관리사 전용 메뉴 -->
-                            <button class="settings-menu-item admin-only" data-settings="corporate-accounts">
-                                <i class="fas fa-users-cog"></i>
-                                <span>법인 계정 관리</span>
-                            </button>
-                            <button class="settings-menu-item admin-only" data-settings="staff-management">
-                                <i class="fas fa-user-tie"></i>
-                                <span>담당자 정보</span>
-                            </button>
-                            <button class="settings-menu-item admin-only" data-settings="monitoring">
-                                <i class="fas fa-chart-line"></i>
-                                <span>모니터링</span>
-                            </button>
-                            <button class="settings-menu-item admin-only" data-settings="product-management">
-                                <i class="fas fa-box"></i>
-                                <span>상품 관리</span>
-                            </button>
-                            <button class="settings-menu-item admin-only" data-settings="document-management">
-                                <i class="fas fa-file-alt"></i>
-                                <span>서류명 관리</span>
-                            </button>
-                            
-                            <!-- 공통 메뉴 -->
-                            <button class="settings-menu-item" data-settings="profile">
-                                <i class="fas fa-user"></i>
-                                <span>프로필/계정 관리</span>
-                            </button>
-                            <button class="settings-menu-item" data-settings="notifications">
-                                <i class="fas fa-bell"></i>
-                                <span>알림 설정</span>
-                            </button>
-                        </div>
+                <!-- 회사 정보 설정 하위메뉴 -->
+                <div id="company-infoSubmenu" class="submenu-content">
+                    <div class="page-header">
+                        <h2>회사 정보 설정</h2>
                     </div>
-
-                    <!-- 설정 내용 -->
-                    <div class="settings-content">
-                        <!-- 회사 정보 설정 (법인 전용) -->
-                        <div id="company-info" class="settings-section corporate-only">
-                            <div class="settings-section-header">
-                                <h3>회사 정보 설정</h3>
-                                <p>법인 로고와 기본 정보를 관리합니다.</p>
-                            </div>
-                            
+                    
+                    <div class="settings-container">
+                        <div class="settings-content">
                             <div class="settings-card">
                                 <h4>법인 로고 업로드</h4>
                                 <div class="logo-upload-area">
                                     <div class="logo-preview" id="logoPreview">
-                                        <div class="logo-placeholder">
+                                        <div class="logo-placeholder" id="logoPlaceholder">
                                             <i class="fas fa-building"></i>
                                             <span>로고를 업로드하세요</span>
                                         </div>
@@ -594,23 +1209,92 @@
                                         </button>
                                     </div>
                                     <div class="logo-upload-info">
-                                        <small>JPG, PNG, SVG / 최대 5MB / 200x200px 권장</small>
+                                        <small>로고 이미지를 업로드하세요. (JPG, PNG, SVG / 최대 5MB / 200x200px 권장)</small>
+                                    </div>
+                                </div>
+                                
+                                <h4>기본 정보</h4>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="companyName">법인명 *</label>
+                                        <input type="text" id="companyName" placeholder="법인명을 입력하세요" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="businessNumber">사업자등록번호 *</label>
+                                        <input type="text" id="businessNumber" placeholder="000-00-00000" required>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="ceoName">대표자명 *</label>
+                                        <input type="text" id="ceoName" placeholder="대표자명을 입력하세요" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="ceoPhone">대표 연락처 *</label>
+                                        <input type="tel" id="ceoPhone" placeholder="010-0000-0000" required>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="ceoEmail">대표 이메일 *</label>
+                                        <input type="email" id="ceoEmail" placeholder="ceo@company.com" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="establishDate">설립일 *</label>
+                                        <input type="date" id="establishDate" required>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="companyAddress">법인주소 *</label>
+                                    <input type="text" id="companyAddress" placeholder="법인주소를 입력하세요" required>
+                                </div>
+                                
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="businessType">업종</label>
+                                        <input type="text" id="businessType" placeholder="업종을 입력하세요">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="companyNote">비고</label>
+                                        <input type="text" id="companyNote" placeholder="추가 정보를 입력하세요">
+                                    </div>
+                                </div>
+                                
+                                <h4>로그인 정보</h4>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="loginEmail">아이디(E-mail) 확인</label>
+                                        <input type="email" id="loginEmail" value="ceo@company.com" readonly>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>&nbsp;</label>
+                                        <button class="btn btn-primary" id="changePasswordBtn">
+                                            <i class="fas fa-key"></i>
+                                            비밀번호 변경
+                                        </button>
                                     </div>
                                 </div>
                                 
                                 <div class="form-actions">
                                     <button class="btn btn-primary" id="saveCompanyInfoBtn">저장</button>
+                                    <button class="btn btn-secondary" id="resetCompanyInfoBtn">초기화</button>
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
 
-                        <!-- 법인 계정 관리 (관리사 전용) -->
-                        <div id="corporate-accounts" class="settings-section admin-only" style="display: none;">
-                            <div class="settings-section-header">
-                                <h3>법인 계정 관리</h3>
-                                <p>등록된 법인 계정을 관리하고 새로운 법인을 등록합니다.</p>
-                            </div>
-                            
+                <!-- 법인 계정 관리 하위메뉴 -->
+                <div id="corporate-accountsSubmenu" class="submenu-content">
+                    <div class="page-header">
+                        <h2>법인 계정 관리</h2>
+                    </div>
+                    
+                    <div class="settings-container">
+                        <div class="settings-content">
                             <div class="settings-card">
                                 <div class="card-header">
                                     <h4>법인 계정 목록</h4>
@@ -626,102 +1310,146 @@
                                             <tr>
                                                 <th><input type="checkbox" id="selectAllCorporates"></th>
                                                 <th>법인명</th>
+                                                <th>법인 ID</th>
                                                 <th>대표자명</th>
+                                                <th>사업자등록번호</th>
                                                 <th>대표 연락처</th>
                                                 <th>대표 이메일</th>
-                                                <th>담당자명</th>
-                                                <th>담당자 연락처</th>
-                                                <th>담당자 이메일</th>
+                                                <th>담당 관리사</th>
+                                                <th>최종 접속일</th>
                                                 <th>등록일</th>
                                                 <th>계정 상태</th>
                                                 <th class="text-center">관리</th>
                                             </tr>
                                         </thead>
                                         <tbody id="corporateAccountsTableBody">
-                                            <!-- 동적으로 생성됨 -->
+                                            <!-- 샘플 데이터 -->
+                                            <tr>
+                                                <td><input type="checkbox" class="corporate-checkbox"></td>
+                                                <td>주식회사 코너스톤</td>
+                                                <td>cornerstone_2024</td>
+                                                <td>김대표</td>
+                                                <td>123-45-67890</td>
+                                                <td>010-1234-5678</td>
+                                                <td>ceo@cornerstone.com</td>
+                                                <td>김관리사</td>
+                                                <td>2024-01-15 14:30</td>
+                                                <td>2024-01-15</td>
+                                                <td><span class="status-badge status-active">활성</span></td>
+                                                <td class="text-center">
+                                                    <button class="btn btn-sm btn-outline" onclick="showAccountInfoModal('cornerstone')" title="계정 정보 관리">
+                                                        <i class="fas fa-key"></i>
+                                                    </button>
+                                                    <button class="btn btn-sm btn-outline" onclick="editCorporateAccount('cornerstone')" title="법인 정보 수정">
+                                                        <i class="fas fa-edit"></i>
+                                                    </button>
+                                                    <button class="btn btn-sm btn-danger" onclick="deleteCorporateAccount('cornerstone')" title="삭제">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>
-                                
-                                <div class="table-footer">
-                                    <div class="bulk-actions">
-                                        <button class="btn btn-secondary" id="bulkActivateBtn" disabled>
-                                            <i class="fas fa-check"></i>
-                                            선택 활성화
-                                        </button>
-                                        <button class="btn btn-secondary" id="bulkDeactivateBtn" disabled>
-                                            <i class="fas fa-ban"></i>
-                                            선택 비활성화
-                                        </button>
-                                        <button class="btn btn-danger" id="bulkDeleteBtn" disabled>
-                                            <i class="fas fa-trash"></i>
-                                            선택 삭제
-                                        </button>
-                                    </div>
-                                    <div class="pagination-info">
-                                        총 <span id="totalCorporates">0</span>개의 법인 계정
-                                    </div>
-                                </div>
                             </div>
                         </div>
+                    </div>
+                </div>
 
-                        <!-- 담당자 정보 (관리사 전용) -->
-                        <div id="staff-management" class="settings-section admin-only" style="display: none;">
-                            <div class="settings-section-header">
-                                <h3>담당자 정보</h3>
-                                <p>내부 담당자와 외부 업무 담당자 정보를 관리합니다.</p>
+                <!-- 알림 관리 하위메뉴 -->
+                <div id="notification-managementSubmenu" class="submenu-content">
+                    <div class="page-header">
+                        <h2>알림 관리</h2>
+                    </div>
+                    
+                    <div class="settings-container">
+                        <div class="settings-content">
+                            <div class="settings-card">
+                                <h4>시스템 알림 스위치</h4>
+                                <div class="notification-switch-section">
+                                    <div class="switch-container">
+                                        <label class="switch">
+                                            <input type="checkbox" id="systemNotificationSwitch" checked>
+                                            <span class="slider"></span>
+                                        </label>
+                                        <div class="switch-label">
+                                            <h5>전체 시스템 알림 활성화/비활성화</h5>
+                                            <p>스위치를 끄면 법인 계정, 서류 만료 등 모든 종류의 자동 알림 발송이 중단됩니다.</p>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             
                             <div class="settings-card">
                                 <div class="card-header">
-                                    <h4>담당자 목록</h4>
-                                    <button class="btn btn-primary" id="addStaffBtn">
-                                        <i class="fas fa-plus"></i>
-                                        담당자 추가
-                                    </button>
+                                    <h4>알림 발송 내역</h4>
+                                    <div class="filter-controls">
+                                        <input type="text" id="notificationSearch" placeholder="법인명 또는 알림 내용 검색">
+                                        <input type="date" id="notificationDateFrom" placeholder="시작일">
+                                        <input type="date" id="notificationDateTo" placeholder="종료일">
+                                        <button class="btn btn-primary" onclick="searchNotifications()">
+                                            <i class="fas fa-search"></i>
+                                            검색
+                                        </button>
+                                    </div>
                                 </div>
                                 
                                 <div class="table-container">
-                                    <table class="data-table" id="staffTable">
+                                    <table class="data-table" id="notificationHistoryTable">
                                         <thead>
                                             <tr>
-                                                <th><input type="checkbox" id="selectAllStaff"></th>
-                                                <th>구분</th>
-                                                <th>이름</th>
-                                                <th>직책</th>
-                                                <th>연락처</th>
-                                                <th>이메일</th>
-                                                <th>ID</th>
-                                                <th>PW</th>
-                                                <th>담당 업무</th>
-                                                <th class="text-center">관리</th>
+                                                <th>날짜</th>
+                                                <th>시간</th>
+                                                <th>대상 법인</th>
+                                                <th>알림 내용</th>
+                                                <th>발송 상태</th>
                                             </tr>
                                         </thead>
-                                        <tbody id="staffTableBody">
-                                            <!-- 동적으로 생성됨 -->
+                                        <tbody id="notificationHistoryTableBody">
+                                            <!-- 샘플 데이터 -->
+                                            <tr>
+                                                <td>2024-01-15</td>
+                                                <td>14:30:25</td>
+                                                <td>주식회사 코너스톤</td>
+                                                <td>임기 만료 알림 (이사 김대표 - 4주 전)</td>
+                                                <td><span class="status-badge status-active">발송완료</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>2024-01-15</td>
+                                                <td>10:15:12</td>
+                                                <td>주식회사 코너스톤</td>
+                                                <td>서류 갱신 알림 (사업자등록증 - 7일 전)</td>
+                                                <td><span class="status-badge status-active">발송완료</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>2024-01-14</td>
+                                                <td>16:45:33</td>
+                                                <td>주식회사 코너스톤</td>
+                                                <td>자산 만료 알림 (연금저축 - 30일 전)</td>
+                                                <td><span class="status-badge status-inactive">발송실패</span></td>
+                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
 
-                        <!-- 모니터링 (관리사 전용) -->
-                        <div id="monitoring" class="settings-section admin-only" style="display: none;">
-                            <div class="settings-section-header">
-                                <h3>모니터링</h3>
-                                <p>모든 법인의 활동 내역을 기록한 로그를 확인합니다.</p>
-                            </div>
-                            
+                <!-- 모니터링 하위메뉴 -->
+                <div id="monitoringSubmenu" class="submenu-content">
+                    <div class="page-header">
+                        <h2>모니터링</h2>
+                    </div>
+                    
+                    <div class="settings-container">
+                        <div class="settings-content">
                             <div class="settings-card">
                                 <div class="monitoring-controls">
                                     <div class="search-row">
                                         <div class="search-group">
                                             <label>법인명 검색</label>
                                             <input type="text" id="monitoringCorpFilter" placeholder="법인명을 입력하세요">
-                                        </div>
-                                        <div class="search-group">
-                                            <label>담당자 검색</label>
-                                            <input type="text" id="monitoringStaffFilter" placeholder="담당자명을 입력하세요">
                                         </div>
                                         <div class="search-group">
                                             <label>작업 내용</label>
@@ -743,26 +1471,46 @@
                                             <tr>
                                                 <th>날짜/시간</th>
                                                 <th>법인명</th>
-                                                <th>작업자</th>
                                                 <th>작업 내용</th>
                                                 <th>IP 주소</th>
                                             </tr>
                                         </thead>
                                         <tbody id="monitoringTableBody">
-                                            <!-- 동적으로 생성됨 -->
+                                            <!-- 샘플 데이터 -->
+                                            <tr>
+                                                <td>2024-01-15 14:30:25</td>
+                                                <td>주식회사 코너스톤</td>
+                                                <td>이사 정보 수정</td>
+                                                <td>192.168.1.100</td>
+                                            </tr>
+                                            <tr>
+                                                <td>2024-01-15 10:15:12</td>
+                                                <td>주식회사 코너스톤</td>
+                                                <td>서류 업로드</td>
+                                                <td>192.168.1.100</td>
+                                            </tr>
+                                            <tr>
+                                                <td>2024-01-14 16:45:33</td>
+                                                <td>주식회사 코너스톤</td>
+                                                <td>자산 정보 등록</td>
+                                                <td>192.168.1.100</td>
+                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
 
-                        <!-- 상품 관리 (관리사 전용) -->
-                        <div id="product-management" class="settings-section admin-only" style="display: none;">
-                            <div class="settings-section-header">
-                                <h3>상품 관리</h3>
-                                <p>자산관리팀에서 사용할 상품 정보와 컬럼 옵션을 관리합니다.</p>
-                            </div>
-                            
+                <!-- 상품 관리 하위메뉴 -->
+                <div id="product-managementSubmenu" class="submenu-content">
+                    <div class="page-header">
+                        <h2>상품 관리</h2>
+                    </div>
+                    
+                    <div class="settings-container">
+                        <div class="settings-content">
                             <div class="product-navigation">
                                 <button class="nav-btn active" data-section="options">
                                     <i class="fas fa-cog"></i>
@@ -825,156 +1573,20 @@
                                             </div>
                                         </div>
                                     </div>
-
-                                    <!-- 거래기관 탭 -->
-                                    <div id="institutions-tab" class="tab-content">
-                                        <div class="content-header">
-                                            <h5>거래기관 관리</h5>
-                                            <button class="btn btn-primary" onclick="showAddOptionModal('institutions')">
-                                                <i class="fas fa-plus"></i>
-                                                거래기관 추가
-                                            </button>
-                                        </div>
-                                        <div class="content-body">
-                                            <div class="table-container">
-                                                <table class="data-table">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>거래기관명</th>
-                                                            <th class="text-center">관리</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody id="institutionsTableBody">
-                                                        <!-- 거래기관 목록이 여기에 표시됨 -->
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- 자산구분(1) 탭 -->
-                                    <div id="assetTypes1-tab" class="tab-content">
-                                        <div class="content-header">
-                                            <h5>자산구분(1) 관리</h5>
-                                            <button class="btn btn-primary" onclick="showAddOptionModal('assetTypes1')">
-                                                <i class="fas fa-plus"></i>
-                                                자산구분(1) 추가
-                                            </button>
-                                        </div>
-                                        <div class="content-body">
-                                            <div class="table-container">
-                                                <table class="data-table">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>자산구분(1)</th>
-                                                            <th>연결된 자산구분(2)</th>
-                                                            <th class="text-center">관리</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody id="assetTypes1TableBody">
-                                                        <!-- 자산구분(1) 목록이 여기에 표시됨 -->
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- 자산구분(2) 탭 -->
-                                    <div id="assetTypes2-tab" class="tab-content">
-                                        <div class="content-header">
-                                            <h5>자산구분(2) 관리</h5>
-                                            <button class="btn btn-primary" onclick="showAddOptionModal('assetTypes2')">
-                                                <i class="fas fa-plus"></i>
-                                                자산구분(2) 추가
-                                            </button>
-                                        </div>
-                                        <div class="content-body">
-                                            <div class="table-container">
-                                                <table class="data-table">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>자산구분(2)</th>
-                                                            <th>상위 자산구분(1)</th>
-                                                            <th class="text-center">관리</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody id="assetTypes2TableBody">
-                                                        <!-- 자산구분(2) 목록이 여기에 표시됨 -->
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- 납입주기 탭 -->
-                                    <div id="paymentCycle-tab" class="tab-content">
-                                        <div class="content-header">
-                                            <h5>납입주기 관리</h5>
-                                            <button class="btn btn-primary" onclick="showAddOptionModal('paymentCycle')">
-                                                <i class="fas fa-plus"></i>
-                                                납입주기 추가
-                                            </button>
-                                        </div>
-                                        <div class="content-body">
-                                            <div class="table-container">
-                                                <table class="data-table">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>납입주기</th>
-                                                            <th class="text-center">관리</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody id="paymentCycleTableBody">
-                                                        <!-- 납입주기 목록이 여기에 표시됨 -->
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- 상품 등록 섹션 -->
-                            <div id="productsSection" class="product-section">
-                                <div class="content-header">
-                                    <h5>등록된 상품 목록</h5>
-                                    <button class="btn btn-primary" onclick="showAddProductModal()">
-                                        <i class="fas fa-plus"></i>
-                                        상품 추가
-                                    </button>
-                                </div>
-                                
-                                <div class="content-body">
-                                    <div class="table-container">
-                                        <table class="data-table">
-                                            <thead>
-                                                <tr>
-                                                    <th><input type="checkbox" id="selectAllProducts"></th>
-                                                    <th>상품명</th>
-                                                    <th>카테고리</th>
-                                                    <th>거래기관</th>
-                                                    <th>자산구분(1)</th>
-                                                    <th>자산구분(2)</th>
-                                                    <th>납입주기</th>
-                                                    <th class="text-center">관리</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="productsTableBody">
-                                                <!-- 상품 목록이 여기에 표시됨 -->
-                                            </tbody>
-                                        </table>
-                                    </div>
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
 
-                        <!-- 서류명 관리 (관리사 전용) -->
-                        <div id="document-management" class="settings-section admin-only" style="display: none;">
-                            <div class="settings-section-header">
-                                <h3>서류명 관리</h3>
-                                <p>법인 필수 서류 관리에서 사용할 서류명을 미리 정의하고 관리합니다.</p>
-                            </div>
-                            
+                <!-- 서류명 관리 하위메뉴 -->
+                <div id="document-managementSubmenu" class="submenu-content">
+                    <div class="page-header">
+                        <h2>서류명 관리</h2>
+                    </div>
+                    
+                    <div class="settings-container">
+                        <div class="settings-content">
                             <div class="settings-card">
                                 <div class="card-header">
                                     <h4>서류명 목록</h4>
@@ -1001,146 +1613,261 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
 
-                        <!-- 프로필/계정 관리 -->
-                        <div id="profile" class="settings-section">
-                            <div class="settings-section-header">
-                                <h3>프로필/계정 관리</h3>
-                                <p>개인 정보와 계정 설정을 관리합니다.</p>
-                            </div>
-                            
-                            <div class="settings-card">
-                                <h4>개인 정보</h4>
-                                <div class="profile-form">
-                                    <div class="form-row">
-                                        <div class="form-group">
-                                            <label for="profileName">이름</label>
-                                            <input type="text" id="profileName" value="김관리자" readonly>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="profileEmail">이메일</label>
-                                            <input type="email" id="profileEmail" value="" readonly>
-                                        </div>
-                                    </div>
-                                    <div class="form-row">
-                                        <div class="form-group">
-                                            <label for="profilePhone">연락처</label>
-                                            <input type="tel" id="profilePhone" value="010-1234-5678" readonly>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="profileDept">부서</label>
-                                            <input type="text" id="profileDept" value="관리팀" readonly>
-                                        </div>
-                                    </div>
-                                    <div class="form-actions">
-                                        <button class="btn btn-primary" id="editProfileBtn">수정</button>
-                                        <button class="btn btn-secondary" id="saveProfileBtn" style="display: none;">저장</button>
-                                        <button class="btn btn-outline" id="cancelProfileBtn" style="display: none;">취소</button>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="settings-card">
-                                <h4>비밀번호 변경</h4>
-                                <div class="password-form">
-                                    <div class="form-group">
-                                        <label for="currentPassword">현재 비밀번호</label>
-                                        <input type="password" id="currentPassword" placeholder="현재 비밀번호를 입력하세요">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="newPassword">새 비밀번호</label>
-                                        <input type="password" id="newPassword" placeholder="새 비밀번호를 입력하세요">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="confirmPassword">비밀번호 확인</label>
-                                        <input type="password" id="confirmPassword" placeholder="새 비밀번호를 다시 입력하세요">
-                                    </div>
-                                    <div class="form-actions">
-                                        <button class="btn btn-primary" id="changePasswordBtn">비밀번호 변경</button>
-                                    </div>
-                                </div>
-                            </div>
+            </div>
+
+
+            </div>
+        </main>
+        </div>
+    </div>
+
+    <!-- 법인 계정 추가/수정 모달 -->
+    <div id="corporateAccountModal" class="modal">
+        <div class="modal-content large">
+            <div class="modal-header">
+                <h3 id="corporateAccountModalTitle">법인 계정 추가</h3>
+                <button class="modal-close" onclick="closeCorporateAccountModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="account-info-section">
+                    <h4>기본 정보</h4>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="modalCompanyName">법인명 *</label>
+                            <input type="text" id="modalCompanyName" placeholder="법인명을 입력하세요" required>
                         </div>
+                        <div class="form-group">
+                            <label for="modalCompanyId">법인 ID *</label>
+                            <input type="text" id="modalCompanyId" placeholder="법인 ID를 입력하세요" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="modalPassword">비밀번호 *</label>
+                            <input type="password" id="modalPassword" placeholder="비밀번호를 입력하세요" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="modalPasswordConfirm">비밀번호 확인 *</label>
+                            <input type="password" id="modalPasswordConfirm" placeholder="비밀번호를 다시 입력하세요" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="modalCeoName">대표자명 *</label>
+                            <input type="text" id="modalCeoName" placeholder="대표자명을 입력하세요" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="modalBusinessNumber">사업자등록번호 *</label>
+                            <input type="text" id="modalBusinessNumber" placeholder="000-00-00000" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="modalCeoPhone">대표 연락처 *</label>
+                            <input type="tel" id="modalCeoPhone" placeholder="010-0000-0000" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="modalCeoEmail">대표 이메일 *</label>
+                            <input type="email" id="modalCeoEmail" placeholder="ceo@company.com" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="modalCompanyAddress">법인주소 *</label>
+                        <input type="text" id="modalCompanyAddress" placeholder="법인주소를 입력하세요" required>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="modalEstablishDate">설립일 *</label>
+                            <input type="date" id="modalEstablishDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="modalNote">비고</label>
+                            <input type="text" id="modalNote" placeholder="추가 정보를 입력하세요">
+                        </div>
+                    </div>
+                </div>
 
-                        <!-- 알림 설정 -->
-                        <div id="notifications" class="settings-section">
-                            <div class="settings-section-header">
-                                <h3>알림 설정</h3>
-                                <p>각종 알림의 활성화 여부와 수신 방식을 설정합니다.</p>
-                            </div>
-                            
-                            <div class="settings-card">
-                                <h4>개별 알림 수신 설정</h4>
-                                <div class="notification-types">
-                                    <div class="notification-item">
-                                        <div class="notification-label">
-                                            <strong>임기 만료 알림</strong>
-                                            <small>이사/감사 임기 만료 4주 전, 2주 전 알림</small>
-                                        </div>
-                                        <div class="notification-methods">
-                                            <label class="checkbox-label">
-                                                <input type="checkbox" id="termExpiryPush" checked>
-                                                <span>앱 푸시</span>
-                                            </label>
-                                            <label class="checkbox-label">
-                                                <input type="checkbox" id="termExpiryEmail" checked>
-                                                <span>이메일</span>
-                                            </label>
-                                            <label class="checkbox-label">
-                                                <input type="checkbox" id="termExpirySMS">
-                                                <span>SMS</span>
-                                            </label>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="notification-item">
-                                        <div class="notification-label">
-                                            <strong>서류 갱신 알림</strong>
-                                            <small>법인 필수 서류 만료 7일 전 알림</small>
-                                        </div>
-                                        <div class="notification-methods">
-                                            <label class="checkbox-label">
-                                                <input type="checkbox" id="docRenewalPush" checked>
-                                                <span>앱 푸시</span>
-                                            </label>
-                                            <label class="checkbox-label">
-                                                <input type="checkbox" id="docRenewalEmail" checked>
-                                                <span>이메일</span>
-                                            </label>
-                                            <label class="checkbox-label">
-                                                <input type="checkbox" id="docRenewalSMS" checked>
-                                                <span>SMS</span>
-                                            </label>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="notification-item">
-                                        <div class="notification-label">
-                                            <strong>자산 만료 알림</strong>
-                                            <small>자산관리팀 상품 만료 알림</small>
-                                        </div>
-                                        <div class="notification-methods">
-                                            <label class="checkbox-label">
-                                                <input type="checkbox" id="assetExpiryPush" checked>
-                                                <span>앱 푸시</span>
-                                            </label>
-                                            <label class="checkbox-label">
-                                                <input type="checkbox" id="assetExpiryEmail" checked>
-                                                <span>이메일</span>
-                                            </label>
-                                            <label class="checkbox-label">
-                                                <input type="checkbox" id="assetExpirySMS">
-                                                <span>SMS</span>
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                <div class="account-info-section">
+                    <h4>법인 정보</h4>
+                    <div class="checkbox-grid">
+                        <div class="checkbox-group">
+                            <h5>인증 및 지정 현황</h5>
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="ventureCert">
+                                <span>벤처기업 인증</span>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="mainbizCert">
+                                <span>메인비즈 인증</span>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="innoCert">
+                                <span>이노비즈 인증</span>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="researchLab">
+                                <span>기업부설연구소 보유</span>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="isoCert">
+                                <span>ISO 인증 보유</span>
+                            </label>
+                        </div>
+                        
+                        <div class="checkbox-group">
+                            <h5>세무 및 회계 관련</h5>
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="externalAudit">
+                                <span>외부감사 대상 법인</span>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="profitCorp">
+                                <span>영리법인</span>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="nonProfitCorp">
+                                <span>비영리법인</span>
+                            </label>
+                        </div>
+                        
+                        <div class="checkbox-group">
+                            <h5>기타 계약 및 사업 관련</h5>
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="govSupport">
+                                <span>정부 지원 사업 참여</span>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="overseasBranch">
+                                <span>해외 지점/법인 여부</span>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="patentTrademark">
+                                <span>특허/상표권 보유</span>
+                            </label>
                         </div>
                     </div>
                 </div>
             </div>
-        </main>
+            <div class="modal-footer">
+                <button class="btn btn-primary" onclick="saveCorporateAccount()">
+                    <i class="fas fa-save"></i>
+                    저장
+                </button>
+                <button class="btn btn-secondary" onclick="closeCorporateAccountModal()">
+                    취소
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 법인 계정 정보 관리 모달 -->
+    <div id="accountInfoModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>법인 계정 정보 관리</h3>
+                <button class="modal-close" onclick="closeAccountInfoModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="account-info-section">
+                    <h4>법인 기본 정보</h4>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>법인명</label>
+                            <input type="text" id="modalCompanyName" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label>대표자명</label>
+                            <input type="text" id="modalCeoName" readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="account-info-section">
+                    <h4>로그인 계정 정보</h4>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="modalAccountId">계정 ID</label>
+                            <div class="input-with-action">
+                                <input type="text" id="modalAccountId" readonly>
+                                <button class="btn btn-sm btn-outline" onclick="toggleAccountIdVisibility()" id="toggleIdBtn">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="modalAccountPassword">계정 비밀번호</label>
+                            <div class="input-with-action">
+                                <input type="password" id="modalAccountPassword" readonly>
+                                <button class="btn btn-sm btn-outline" onclick="togglePasswordVisibility()" id="togglePwBtn">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button class="btn btn-primary" onclick="resetAccountPassword()">
+                            <i class="fas fa-key"></i>
+                            비밀번호 재설정
+                        </button>
+                        <button class="btn btn-secondary" onclick="generateNewPassword()">
+                            <i class="fas fa-sync"></i>
+                            새 비밀번호 생성
+                        </button>
+                    </div>
+                </div>
+
+                <div class="account-info-section">
+                    <h4>계정 상태 관리</h4>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="modalAccountStatus">계정 상태</label>
+                            <select id="modalAccountStatus">
+                                <option value="active">활성</option>
+                                <option value="inactive">비활성</option>
+                                <option value="suspended">정지</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="modalLastLogin">최종 로그인</label>
+                            <input type="text" id="modalLastLogin" readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="account-info-section">
+                    <h4>보안 설정</h4>
+                    <div class="form-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="modalForcePasswordChange">
+                            <span>다음 로그인 시 비밀번호 변경 강제</span>
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="modalTwoFactorAuth">
+                            <span>2단계 인증 활성화</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" onclick="saveAccountInfo()">
+                    <i class="fas fa-save"></i>
+                    저장
+                </button>
+                <button class="btn btn-secondary" onclick="closeAccountInfoModal()">
+                    취소
+                </button>
+            </div>
+        </div>
     </div>
 
     <!-- 상품 옵션 추가 모달 -->
@@ -1225,6 +1952,336 @@
 
     <script src="js/app.js"></script>
     <script>
+        // 하위메뉴 토글 함수
+        function toggleSubmenu(button) {
+            const navGroup = button.closest('.nav-group');
+            const submenu = navGroup.querySelector('.nav-submenu');
+            
+            // 다른 모든 그룹 닫기
+            document.querySelectorAll('.nav-group').forEach(group => {
+                if (group !== navGroup) {
+                    group.classList.remove('expanded');
+                }
+            });
+            
+            // 현재 그룹 토글
+            navGroup.classList.toggle('expanded');
+            
+            console.log('하위메뉴 토글:', navGroup.classList.contains('expanded') ? '펼쳐짐' : '접힘');
+        }
+        
+        // 하위메뉴 화면 표시 함수
+        function showSubmenu(submenuId) {
+            console.log('하위메뉴 클릭:', submenuId);
+            
+            // 모든 페이지 숨기기
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // 모든 하위메뉴 콘텐츠 숨기기
+            document.querySelectorAll('.submenu-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // 해당 하위메뉴 콘텐츠 표시
+            const submenuContent = document.getElementById(submenuId + 'Submenu');
+            if (submenuContent) {
+                submenuContent.classList.add('active');
+                console.log('하위메뉴 콘텐츠 표시:', submenuId);
+            } else {
+                console.log('하위메뉴 콘텐츠를 찾을 수 없음:', submenuId);
+            }
+            
+            // 모바일에서 사이드바 닫기
+            if (window.innerWidth <= 768) {
+                const sidebar = document.getElementById('sidebar');
+                if (sidebar) {
+                    sidebar.classList.remove('show');
+                }
+            }
+        }
+
+        // 계정 정보 관리 모달 관련 함수들
+        function showAccountInfoModal(corporateId) {
+            console.log('계정 정보 모달 열기:', corporateId);
+            
+            // 샘플 데이터 로드 (실제로는 서버에서 가져와야 함)
+            const sampleData = {
+                'cornerstone': {
+                    companyName: '주식회사 코너스톤',
+                    ceoName: '김대표',
+                    accountId: 'cornerstone_2024',
+                    accountPassword: 'TempPass123!',
+                    status: 'active',
+                    lastLogin: '2024-01-15 14:30:25',
+                    forcePasswordChange: false,
+                    twoFactorAuth: true
+                }
+            };
+            
+            const data = sampleData[corporateId] || sampleData['cornerstone'];
+            
+            // 모달에 데이터 채우기
+            document.getElementById('modalCompanyName').value = data.companyName;
+            document.getElementById('modalCeoName').value = data.ceoName;
+            document.getElementById('modalAccountId').value = data.accountId;
+            document.getElementById('modalAccountPassword').value = data.accountPassword;
+            document.getElementById('modalAccountStatus').value = data.status;
+            document.getElementById('modalLastLogin').value = data.lastLogin;
+            document.getElementById('modalForcePasswordChange').checked = data.forcePasswordChange;
+            document.getElementById('modalTwoFactorAuth').checked = data.twoFactorAuth;
+            
+            // 모달 표시
+            document.getElementById('accountInfoModal').style.display = 'block';
+        }
+
+        function closeAccountInfoModal() {
+            document.getElementById('accountInfoModal').style.display = 'none';
+        }
+
+        function toggleAccountIdVisibility() {
+            const input = document.getElementById('modalAccountId');
+            const btn = document.getElementById('toggleIdBtn');
+            const icon = btn.querySelector('i');
+            
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.className = 'fas fa-eye-slash';
+            } else {
+                input.type = 'password';
+                icon.className = 'fas fa-eye';
+            }
+        }
+
+        function togglePasswordVisibility() {
+            const input = document.getElementById('modalAccountPassword');
+            const btn = document.getElementById('togglePwBtn');
+            const icon = btn.querySelector('i');
+            
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.className = 'fas fa-eye-slash';
+            } else {
+                input.type = 'password';
+                icon.className = 'fas fa-eye';
+            }
+        }
+
+        function resetAccountPassword() {
+            if (confirm('정말로 비밀번호를 재설정하시겠습니까? 새로운 임시 비밀번호가 생성됩니다.')) {
+                // 실제로는 서버에 요청을 보내야 함
+                const newPassword = generateRandomPassword();
+                document.getElementById('modalAccountPassword').value = newPassword;
+                document.getElementById('modalForcePasswordChange').checked = true;
+                
+                alert('비밀번호가 재설정되었습니다. 새로운 비밀번호: ' + newPassword);
+            }
+        }
+
+        function generateNewPassword() {
+            const newPassword = generateRandomPassword();
+            document.getElementById('modalAccountPassword').value = newPassword;
+            document.getElementById('modalForcePasswordChange').checked = true;
+            
+            alert('새 비밀번호가 생성되었습니다: ' + newPassword);
+        }
+
+        function generateRandomPassword() {
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*';
+            let password = '';
+            for (let i = 0; i < 12; i++) {
+                password += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            return password;
+        }
+
+        function saveAccountInfo() {
+            // 실제로는 서버에 저장 요청을 보내야 함
+            const accountData = {
+                accountId: document.getElementById('modalAccountId').value,
+                accountPassword: document.getElementById('modalAccountPassword').value,
+                status: document.getElementById('modalAccountStatus').value,
+                forcePasswordChange: document.getElementById('modalForcePasswordChange').checked,
+                twoFactorAuth: document.getElementById('modalTwoFactorAuth').checked
+            };
+            
+            console.log('계정 정보 저장:', accountData);
+            alert('계정 정보가 저장되었습니다.');
+            closeAccountInfoModal();
+        }
+
+        function editCorporateAccount(corporateId) {
+            console.log('법인 정보 수정:', corporateId);
+            // 실제로는 법인 정보 수정 모달을 열어야 함
+            alert('법인 정보 수정 기능은 준비 중입니다.');
+        }
+
+        function deleteCorporateAccount(corporateId) {
+            if (confirm('정말로 이 법인 계정을 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다.')) {
+                console.log('법인 계정 삭제:', corporateId);
+                // 실제로는 서버에 삭제 요청을 보내야 함
+                alert('법인 계정이 삭제되었습니다.');
+            }
+        }
+
+        // 법인 계정 추가/수정 모달 관련 함수들
+        function showCorporateAccountModal(corporateId = null) {
+            const modal = document.getElementById('corporateAccountModal');
+            const title = document.getElementById('corporateAccountModalTitle');
+            
+            if (corporateId) {
+                title.textContent = '법인 계정 수정';
+                // 실제로는 서버에서 데이터를 가져와야 함
+                loadCorporateAccountData(corporateId);
+            } else {
+                title.textContent = '법인 계정 추가';
+                clearCorporateAccountForm();
+            }
+            
+            modal.style.display = 'block';
+        }
+
+        function closeCorporateAccountModal() {
+            document.getElementById('corporateAccountModal').style.display = 'none';
+        }
+
+        function loadCorporateAccountData(corporateId) {
+            // 실제로는 서버에서 데이터를 가져와야 함
+            const sampleData = {
+                'cornerstone': {
+                    companyName: '주식회사 코너스톤',
+                    companyId: 'cornerstone_2024',
+                    ceoName: '김대표',
+                    businessNumber: '123-45-67890',
+                    ceoPhone: '010-1234-5678',
+                    ceoEmail: 'ceo@cornerstone.com',
+                    companyAddress: '서울시 강남구 테헤란로 123',
+                    establishDate: '2020-01-15',
+                    note: '샘플 법인',
+                    ventureCert: true,
+                    mainbizCert: false,
+                    innoCert: true,
+                    researchLab: false,
+                    isoCert: true,
+                    externalAudit: true,
+                    profitCorp: true,
+                    nonProfitCorp: false,
+                    govSupport: false,
+                    overseasBranch: false,
+                    patentTrademark: true
+                }
+            };
+            
+            const data = sampleData[corporateId] || {};
+            
+            // 폼에 데이터 채우기
+            document.getElementById('modalCompanyName').value = data.companyName || '';
+            document.getElementById('modalCompanyId').value = data.companyId || '';
+            document.getElementById('modalCeoName').value = data.ceoName || '';
+            document.getElementById('modalBusinessNumber').value = data.businessNumber || '';
+            document.getElementById('modalCeoPhone').value = data.ceoPhone || '';
+            document.getElementById('modalCeoEmail').value = data.ceoEmail || '';
+            document.getElementById('modalCompanyAddress').value = data.companyAddress || '';
+            document.getElementById('modalEstablishDate').value = data.establishDate || '';
+            document.getElementById('modalNote').value = data.note || '';
+            
+            // 체크박스 설정
+            document.getElementById('ventureCert').checked = data.ventureCert || false;
+            document.getElementById('mainbizCert').checked = data.mainbizCert || false;
+            document.getElementById('innoCert').checked = data.innoCert || false;
+            document.getElementById('researchLab').checked = data.researchLab || false;
+            document.getElementById('isoCert').checked = data.isoCert || false;
+            document.getElementById('externalAudit').checked = data.externalAudit || false;
+            document.getElementById('profitCorp').checked = data.profitCorp || false;
+            document.getElementById('nonProfitCorp').checked = data.nonProfitCorp || false;
+            document.getElementById('govSupport').checked = data.govSupport || false;
+            document.getElementById('overseasBranch').checked = data.overseasBranch || false;
+            document.getElementById('patentTrademark').checked = data.patentTrademark || false;
+        }
+
+        function clearCorporateAccountForm() {
+            document.getElementById('modalCompanyName').value = '';
+            document.getElementById('modalCompanyId').value = '';
+            document.getElementById('modalPassword').value = '';
+            document.getElementById('modalPasswordConfirm').value = '';
+            document.getElementById('modalCeoName').value = '';
+            document.getElementById('modalBusinessNumber').value = '';
+            document.getElementById('modalCeoPhone').value = '';
+            document.getElementById('modalCeoEmail').value = '';
+            document.getElementById('modalCompanyAddress').value = '';
+            document.getElementById('modalEstablishDate').value = '';
+            document.getElementById('modalNote').value = '';
+            
+            // 모든 체크박스 해제
+            document.querySelectorAll('#corporateAccountModal input[type="checkbox"]').forEach(checkbox => {
+                checkbox.checked = false;
+            });
+        }
+
+        function saveCorporateAccount() {
+            // 비밀번호 확인
+            const password = document.getElementById('modalPassword').value;
+            const passwordConfirm = document.getElementById('modalPasswordConfirm').value;
+            
+            if (password !== passwordConfirm) {
+                alert('비밀번호가 일치하지 않습니다.');
+                return;
+            }
+            
+            // 실제로는 서버에 저장 요청을 보내야 함
+            const accountData = {
+                companyName: document.getElementById('modalCompanyName').value,
+                companyId: document.getElementById('modalCompanyId').value,
+                password: password,
+                ceoName: document.getElementById('modalCeoName').value,
+                businessNumber: document.getElementById('modalBusinessNumber').value,
+                ceoPhone: document.getElementById('modalCeoPhone').value,
+                ceoEmail: document.getElementById('modalCeoEmail').value,
+                companyAddress: document.getElementById('modalCompanyAddress').value,
+                establishDate: document.getElementById('modalEstablishDate').value,
+                note: document.getElementById('modalNote').value,
+                // 체크박스 데이터
+                ventureCert: document.getElementById('ventureCert').checked,
+                mainbizCert: document.getElementById('mainbizCert').checked,
+                innoCert: document.getElementById('innoCert').checked,
+                researchLab: document.getElementById('researchLab').checked,
+                isoCert: document.getElementById('isoCert').checked,
+                externalAudit: document.getElementById('externalAudit').checked,
+                profitCorp: document.getElementById('profitCorp').checked,
+                nonProfitCorp: document.getElementById('nonProfitCorp').checked,
+                govSupport: document.getElementById('govSupport').checked,
+                overseasBranch: document.getElementById('overseasBranch').checked,
+                patentTrademark: document.getElementById('patentTrademark').checked
+            };
+            
+            console.log('법인 계정 저장:', accountData);
+            alert('법인 계정이 저장되었습니다.');
+            closeCorporateAccountModal();
+        }
+
+        // 알림 관리 관련 함수들
+        function searchNotifications() {
+            const searchTerm = document.getElementById('notificationSearch').value;
+            const dateFrom = document.getElementById('notificationDateFrom').value;
+            const dateTo = document.getElementById('notificationDateTo').value;
+            
+            console.log('알림 검색:', { searchTerm, dateFrom, dateTo });
+            // 실제로는 서버에 검색 요청을 보내야 함
+            alert('검색 기능은 준비 중입니다.');
+        }
+
+        // 법인 계정 추가 버튼 이벤트 연결
+        document.addEventListener('DOMContentLoaded', function() {
+            const addCorporateAccountBtn = document.getElementById('addCorporateAccountBtn');
+            if (addCorporateAccountBtn) {
+                addCorporateAccountBtn.addEventListener('click', function() {
+                    showCorporateAccountModal();
+                });
+            }
+        });
+    </script>
+    <script>
         // 페이지 로드 시 상품 옵션 데이터 초기화
         window.addEventListener('load', function() {
             console.log('페이지 로드 완료 - 초기 데이터 로드 시작');
@@ -1273,6 +2330,7 @@
                 }
             };
         });
+        
     </script>
 </body>
 </html>
